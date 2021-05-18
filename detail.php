@@ -112,11 +112,16 @@ $avg = $pecah3 / $jumlah_baris;
                         <td>Deskripsi</td>
                         <td><?= $detail['deskripsi_produk'];?></td>
                     </tr>
-                </table>
-                
-                <?php if($detail['stok_produk'] == 0 ):?> <!-- stok -->
-                    
-                        <?php if($id_pel != $id_pelanggan and $id_pro != $id_produk):?>  
+                </table>               
+                <?php if($detail['stok_produk'] == 0 ):?> <!-- stok -->        
+                        <?php if($id_pel != $id_pelanggan and $id_pro != $id_produk):?>
+                            <h5>Rating : </h5>
+                            <div class="d-flex"> 
+                                <?php for($i = 0; $i < $avg; $i++):?>
+                                    <i class="fas fa-star fa-2x my-1" style="color: gold;"></i>
+                                <?php endfor;?> 
+                                <p class="d-inline fs-4 mx-3"><?= round($avg,2);?></p>
+                            </div>  
                             <form action="" method="POST">
                                 <div class="row my-2">
                                     <div class="col-md-8">
@@ -141,19 +146,14 @@ $avg = $pecah3 / $jumlah_baris;
                                 <p class="d-inline fs-4 mx-3"><?= round($avg,2);?></p>
                             </div>
                         <?php endif;?>
-                    
                         <form action="" method="POST" class="d-none">
                             <div class="form-group">
                                 <div class="input-group">
                                     <input type="number" min="1" class="form-control" max="<?= $detail['stok_produk'];?>" name="jumlah" value="1"><button class="btn btn-primary" type="submit" name="beli">Beli</button>
                                 </div>
                             </div>
-                        </form>
-                        
-                <?php else :?>
-                        
-                            
-                        
+                        </form>                  
+                <?php else :?>                             
                         <?php if($id_pel != $id_pelanggan and $id_pro != $id_produk):?>
                             <?php for($i = 0; $i < $avg; $i++):?>
                                     <i class="fas fa-star fa-2x my-1" style="color: gold;"></i>
@@ -184,14 +184,14 @@ $avg = $pecah3 / $jumlah_baris;
                                 <?php endfor;?> 
                                 <p class="d-inline fs-4 mx-3"><?= !empty($avg) ? round($avg,2) : "tidak ada rating";?></p>
                             </div>
-                        <?php endif;?>s
+                        <?php endif;?>
                             <form action="" method="POST" >
                                 <div class="form-group">
                                     <div class="input-group">
                                         <input type="number" min="1" class="form-control" max="<?= $detail['stok_produk'];?>" name="jumlah" value="1"><button class="btn btn-primary" type="submit" name="beli">Beli</button>
                                     </div>
                                 </div>
-                            </form>s                  
+                            </form>                 
                 <?php endif;?>
             </div>
         </div>
