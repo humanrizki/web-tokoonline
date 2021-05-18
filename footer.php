@@ -22,4 +22,3 @@
         <p class="text-white">&copy copyright by Tabernam Nostri</p>
     </div>
 </footer>
-<?php include 'fontawesome.php';?>
