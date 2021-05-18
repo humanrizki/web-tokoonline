@@ -95,7 +95,7 @@ if(!isset($_SESSION['pelanggan'])){
                   <textarea name="alamat_pengiriman" id="alamat" cols="30" rows="4" class="form-control"></textarea>
                 </div>
               </div>
-              <button class="btn btn-primary my-2" name="checkout">Checkout</button>
+              <button class="btn btn-primary my-2" name="checkout">Checkout <i class="fas fa-credit-card ms-2"></i></button>
         </form>
         <?php 
           if(isset($_POST['checkout'])){

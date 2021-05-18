@@ -189,7 +189,7 @@ $avg = $pecah3 / $jumlah_baris;
                             <form action="" method="POST" >
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="number" min="1" class="form-control" max="<?= $detail['stok_produk'];?>" name="jumlah" value="1"><button class="btn btn-primary" type="submit" name="beli">Beli</button>
+                                        <input type="number" min="1" class="form-control" max="<?= $detail['stok_produk'];?>" name="jumlah" value="1"><button class="btn btn-primary" type="submit" name="beli">Beli <i class="fas fa-plus ms-2"></i></button>
                                     </div>
                                 </div>
                             </form>                 

@@ -81,9 +81,9 @@ while($tiap = $gets->fetch_assoc()){
                 
                 <div class="card shadow">
                     <?php if($pecah['stok_produk'] > 0):?>
-                    <span class="badge bg-success p-2 position-absolute" style="width: fit-content;">Tersedia</span>
+                    <h5><span class="badge bg-success p-2 position-absolute" style="width: fit-content;">Tersedia <i class="fas fa-plus-square ms-2"></i></span></h5>
                     <?php else:?>
-                    <span class="badge bg-primary p-2 position-absolute" style="width: fit-content;">Kosong</span>
+                    <h5><span class="badge bg-primary p-2 position-absolute" style="width: fit-content;">Kosong <i class="fas fa-minus-square ms-2"></i></span></h5>
                     <?php endif;?>
                     <img src="admin/img/<?= $pecah['foto_produk'];?>" alt=""  class="card-img-top">
                     <div class="card-body">
@@ -93,8 +93,8 @@ while($tiap = $gets->fetch_assoc()){
                         </h6>
                         <hr>
                         <h5 class="card-text"><?= "Rp ". number_format( $pecah['harga_produk']);?></h5>
-                        <a href="beli.php?id=<?= $pecah['id_produk']; ?>" class="btn btn-primary w-0 float-left">Beli</a>
-                        <a href="detail.php?id=<?= $pecah['id_produk'];?>" class="btn btn-info  text-white float-right">Detail</a>
+                        <a href="beli.php?id=<?= $pecah['id_produk']; ?>" class="btn btn-primary w-0 float-left">Beli <i class="fas fa-plus ms-2"></i></a>
+                        <a href="detail.php?id=<?= $pecah['id_produk'];?>" class="btn btn-info  text-white float-right">Detail <i class="fas fa-info-circle"></i></a>
                     </div>
                 </div>
             </div>

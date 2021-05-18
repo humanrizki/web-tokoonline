@@ -41,10 +41,11 @@
       </ul>
       <form action="pencarian.php" method="GET" class=" navbar-form d-flex w-100 justify-content-center my-2">
         <div class="input-group w-100">
-          <input type="text" class="form-control float-right" name="produk">
+          <input type="text" class="form-control float-right border-primary border-4" name="produk">
+          <button class="btn btn-primary">Telusuri <i class="fas fa-search mx-2"></i></button>
         </div>
         
-        <button class="btn btn-primary">Cari</button>
+        
       </form>
     </div>
   </div>

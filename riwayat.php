@@ -60,18 +60,18 @@ if(!isset($_SESSION['pelanggan']) or empty($_SESSION['pelanggan'])){
                     <td><?= number_format($pecah['total_pembelian']);?></td>
                     <td> 
                         <?php if(empty($pecah['resi_pengiriman']) and $pecah['status_pembelian'] == 'pending'):?>
-                        <a href="nota.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-info text-white">Nota</a>
-                        <a href="pembayaran.php?id=<?= $pecah['id_pembelian']; ?>" class="btn btn-success">Input pembayaran</a>
-                        <a href="batalkanpembayaran.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-danger text-white">Batalkan</a>
+                        <a href="nota.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-info text-white">Nota <i class="fas fa-sticky-note ms-1"></i></a>
+                        <a href="pembayaran.php?id=<?= $pecah['id_pembelian']; ?>" class="btn btn-success">Input pembayaran <i class="fas fa-external-link-alt ms-1"></i></a>
+                        <a href="batalkanpembayaran.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-danger text-white">Batalkan <i class="fas fa-window-close ms-1"></i></a>
                         <?php elseif($pecah['status_pembelian'] == 'batal' or $pecah['status_pembelian'] == 'lunas'):?>
-                        <a href="nota.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-info text-white">Nota</a>
-                        <a href="hapuspembayaran.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-danger">Hapus Riwayat</a>
+                        <a href="nota.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-info text-white">Nota <i class="fas fa-sticky-note ms-1"></i></a></a>
+                        <a href="hapuspembayaran.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-danger">Hapus Riwayat <i class="fas fa-window-close"></i></a>
                         <?php elseif($pecah['status_pembelian'] == 'barang dikirim'):?>
-                        <a href="nota.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-info text-white">Nota</a>
-                        <a href="konfirmasi.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-primary">Konfirmasi</a>
+                        <a href="nota.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-info text-white">Nota <i class="fas fa-sticky-note ms-1"></i></a></a>
+                        <a href="konfirmasi.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-primary">Konfirmasi <i class="fas fa-check-circle"></i></a>
                         <?php else :?>
-                            <a href="nota.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-info text-white">Nota</a>
-                            <a href="lihat_pembayaran.php?id=<?= $pecah['id_pembelian']; ?>" class="btn btn-warning text-white">Lihat pembayaran</a>
+                            <a href="nota.php?id=<?= $pecah['id_pembelian'];?>" class="btn btn-info text-white">Nota <i class="fas fa-sticky-note ms-1"></i></a></a>
+                            <a href="lihat_pembayaran.php?id=<?= $pecah['id_pembelian']; ?>" class="btn btn-warning text-white">Lihat pembayaran <i class="fas fa-eye"></i></a>
 
                         <?php endif;?>
                         

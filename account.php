@@ -134,12 +134,12 @@ $pecah_akun = $ambil2->fetch_assoc();
                                     <h5 class="text-muted"><em> Masih belom ada riwayat detil barang yang dibeli!</em></h5>
                                 </div>
                                 <?php endif;?>
-                                <div class="col-md-6 offset-3">
-                                    <a href="riwayatbarang.php" class="btn btn-primary">Lihat data riwayat barang full!</a>
+                                <div class="col-md-8 offset-2">
+                                    <a href="riwayatbarang.php" class="btn btn-primary fs-5">Lihat data riwayat barang full! <i class="fas fa-history fa-1x"></i></a>
                                 </div>
                             </div>
                             <hr>
-                            <a href="rubahakun.php" class="btn btn-warning text-white">Ubah data diakun</a>
+                            <a href="rubahakun.php" class="btn btn-warning text-white">Ubah data diakun <i class="fas fa-pencil-alt"></i></a>
                         </div>
                     </div>
                 </div>
