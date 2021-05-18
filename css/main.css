@@ -1,0 +1,23 @@
+@media screen and (max-width: 600px){
+    .konten .container{
+        /* display: flex; */
+        display: block;
+        width: 100%;
+        /* justify-content: start; */
+    }
+    .konten{
+        width: 100%;
+    }
+}
+@media screen and (min-width: 1200px){
+    section.konten {
+        width: 25%;
+    }
+    .container-fluid {
+        display: block;
+        width: 50%;
+    }
+    .container-fluid .card {
+        width: 50%;
+    }
+}
