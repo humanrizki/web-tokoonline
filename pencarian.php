@@ -21,7 +21,7 @@ while($pecah = $ambil->fetch_assoc()){
 </head>
 <body>
     <?php include 'menu.php';?>
-    <div class="container my-5" style="height: 100vh;">
+    <div class="container my-5" style="height: 100%;">
         <h3>Hasil Pencarian<?= " : ".$produk;?></h3>
         <?php 
         if(empty($semua) or $produk == ''):
@@ -38,17 +38,19 @@ while($pecah = $ambil->fetch_assoc()){
                 
                     <img src="admin/img/<?= $value['foto_produk'];?>" alt=""  class=" ">
                     <?php if($value['stok_produk'] > 0):?>
-                    <span class="badge bg-success p-2 position-absolute" style="width: fit-content;">Tersedia</span>
+                    <h5><span class="badge bg-success p-2 position-absolute top-0" style="width: fit-content;">Tersedia <i class="fas fa-plus-square ms-2"></i></span></h5>
                     <?php else:?>
-                    <span class="badge bg-primary p-2 position-absolute" style="width: fit-content;">Kosong</span>
+                    <h5><span class="badge bg-primary p-2 position-absolute top-0" style="width: fit-content;">Kosong <i class="fas fa-minus-square ms-2"></i></span></h5>
                     <?php endif;?>
                     <div class="card-body">
                         <h5 class="card-title fs-5"><?= strlen($value['nama_produk']) >= 15? substr($value['nama_produk'],0,15)."...":$value['nama_produk'];?></h5>
                         <h6 class="card-subtitle text-muted"><?= substr($value['deskripsi_produk'], 0, 25)."...";?></h6>
                         <hr>
                         <h5 class="card-text"><?= "Rp ". number_format( $value['harga_produk']);?></h5>
-                        <a href="beli.php?id=<?= $value['id_produk']; ?>" class="btn btn-primary w-0 float-left">Beli</a>
-                        <a href="detail.php?id=<?= $value['id_produk'];?>" class="btn btn-info  text-white float-right">Detail</a>
+                        <?php if($value['stok_produk'] > 0):?>
+                        <a href="beli.php?id=<?= $value['id_produk']; ?>" class="btn btn-primary w-0 float-left">Beli <i class="fas fa-plus ms-2"></i></a>
+                        <?php endif;?>
+                        <a href="detail.php?id=<?= $value['id_produk'];?>" class="btn btn-info  text-white float-right">Detail <i class="fas fa-info-circle"></i></a>
                     </div>
                 </div>
             </div>

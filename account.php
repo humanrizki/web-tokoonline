@@ -58,8 +58,13 @@ $pecah_akun = $ambil2->fetch_assoc();
             <div class="row">
                 <div class="col-md-6 ">
                     <div class="foto d-flex flex-column justify-content-center align-items-center mb-3" style="height: 300px;">
+                    <?php if($pecah_akun['foto_pelanggan'] != ''):?>
+                        <img src="img/<?= $pecah_akun['foto_pelanggan'];?>" alt="" class="rounded-circle shadow-lg mt-5" width="200" height="200">
+                        <h3 class="text-primary my-2"><?= $pecah_akun['nama_pelanggan'];?></h3>
+                    <?php else:?>
                         <img src="user(2).png" alt="" class="rounded-circle shadow-lg mt-5" width="200" height="200">
                         <h3 class="text-primary my-2"><?= $pecah_akun['nama_pelanggan'];?></h3>
+                    <?php endif;?>
                     </div>
                     <div class="col w-100">
                         <div class="accordion accordion-flush position-relative" id="accordionFlushExample">

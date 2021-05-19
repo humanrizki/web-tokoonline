@@ -44,6 +44,10 @@ while($tiap = $ambil3->fetch_assoc()){
     }
 }
 $avg = $pecah3 / $jumlah_baris;
+if(is_nan($avg)){
+    $avg = "tidak ada rating";
+}
+// var_dump($avg);
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +125,7 @@ $avg = $pecah3 / $jumlah_baris;
                                 <?php for($i = 0; $i < $avg; $i++):?>
                                     <i class="fas fa-star fa-2x my-1" style="color: gold;"></i>
                                 <?php endfor;?> 
-                                <p class="d-inline fs-4 mx-3"><?= round($avg,2);?></p>
+                                <p class="d-inline fs-4 mb-1 ms-2"><?= ($avg == "tidak ada rating") ? $avg : round($avg, 2);?></p>
                             </div>  
                             <form action="" method="POST">
                                 <div class="row my-2">
@@ -156,10 +160,14 @@ $avg = $pecah3 / $jumlah_baris;
                         </form>                  
                 <?php else :?>                             
                         <?php if($id_pel != $id_pelanggan and $id_pro != $id_produk):?>
-                            <?php for($i = 0; $i < $avg; $i++):?>
-                                    <i class="fas fa-star fa-2x my-1" style="color: gold;"></i>
-                            <?php endfor;?> 
-                            <p class="d-inline fs-4 mx-3"><?= !empty($avg) ? "Tidak ada rating": 'a';?></p>
+                            <h5>Rating : </h5>
+                            
+                                <?php for($i = 0; $i < $avg; $i++):?>
+                                        <i class="fas fa-star fa-2x my-1" style="color: gold;"></i>
+                                <?php endfor;?>
+                            
+                            <p class="d-inline fs-4 mb-1 ms-2"><?= ($avg == "tidak ada rating") ? $avg : round($avg, 2);?></p>
+                            
                             <?php if(isset($_SESSION['pelanggan'])):?>
                                 <form action="" method="POST">
                                     <div class="row my-2">
@@ -183,7 +191,7 @@ $avg = $pecah3 / $jumlah_baris;
                                 <?php for($i = 0; $i < $avg; $i++):?>
                                     <i class="fas fa-star fa-2x my-1" style="color: gold;"></i>
                                 <?php endfor;?> 
-                                <p class="d-inline fs-4 mx-3"><?= !empty($avg) ? round($avg,2) : "tidak ada rating";?></p>
+                                <p class="d-inline fs-4 mb-1 ms-2"><?= ($avg == "tidak ada rating") ? $avg : round($avg, 2);?></p>
                             </div>
                         <?php endif;?>
                             <form action="" method="POST" >

@@ -93,8 +93,11 @@ while($tiap = $gets->fetch_assoc()){
                         </h6>
                         <hr>
                         <h5 class="card-text"><?= "Rp ". number_format( $pecah['harga_produk']);?></h5>
+                        <?php if($pecah['stok_produk'] > 0):?>
                         <a href="beli.php?id=<?= $pecah['id_produk']; ?>" class="btn btn-primary w-0 float-left">Beli <i class="fas fa-plus ms-2"></i></a>
+                        <?php endif;?>
                         <a href="detail.php?id=<?= $pecah['id_produk'];?>" class="btn btn-info  text-white float-right">Detail <i class="fas fa-info-circle"></i></a>
+                        
                     </div>
                 </div>
             </div>

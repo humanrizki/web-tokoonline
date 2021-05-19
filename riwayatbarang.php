@@ -64,7 +64,7 @@ foreach($ids as $key){
                 <td ><?= $detail_jumlah[$i];
                 $i++;?></td>
                 <td >
-                    <a href="detilriwayat.php?id=<?=$value['id_produk'];?>" class="btn btn-primary">Detil</a>
+                    <a href="detilriwayat.php?id=<?=$value['id_produk'];?>" class="btn btn-primary">Detil <i class="fas fa-info ms-2"></i></a>
                 </td>
             </tr>
         <?php endif;?>
