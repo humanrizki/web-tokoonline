@@ -145,6 +145,14 @@ $pecah_akun = $ambil2->fetch_assoc();
                             </div>
                             <hr>
                             <a href="rubahakun.php" class="btn btn-warning text-white">Ubah data diakun <i class="fas fa-pencil-alt"></i></a>
+                            <?php if(isset($_SESSION['admin'])):?>
+                            <a href="chat.php" class="btn btn-primary">Chat dengan admin : <i class="fas fa-user ms-2"></i>
+                            </a>
+                            <?php else:?>
+                            <a href="ping.php" class="btn btn-danger">beritahu admin : <i class="fas fa-user ms-2"></i>
+                            </a>
+                            <?php endif;?>
+                            
                         </div>
                     </div>
                 </div>

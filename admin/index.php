@@ -104,6 +104,8 @@ font-size: 16px; padding:19px"> <?php isset($_SESSION['admin']) ? print("Tanggal
                         include 'hapusfotoproduk.php';
                     } elseif($_GET['halaman'] == 'ubahfotoproduk'){
                         include 'ubahfoto.php';
+                    } elseif($_GET['halaman'] == 'ping'){
+                        include 'ping.php';
                     }
                 } else {
                     include 'home.php';
