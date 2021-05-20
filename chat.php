@@ -8,16 +8,27 @@ if(!isset($_SESSION['admin'])){
 }
 $user = $_SESSION['pelanggan'];
 $chat_id = $_SESSION['pelanggan']['id_pelanggan'];
-$ambil = $connect->query("SELECT * FROM chat WHERE id_chat_user='$chat_id'");
-$ambil2 = $connect->query("SELECT * FROM reply_chat");
+$ambil = $connect->query("SELECT * FROM chat");
+$ambil2 = $connect->query("SELECT * FROM message");
+$count = $ambil->num_rows;
+$count2 = $ambil2->num_rows;
 $pecah = [];
 $pecah2 = [];
-while($tiap = $ambil->fetch_assoc()){
-    $pecah[] = $tiap;
+if($count > 0){
+    while($tiap = $ambil->fetch_assoc()){
+        $pecah[] = $tiap;
+    }
+} else {
+    $_SESSION['id'] = 1;
 }
-while($tiap = $ambil2->fetch_assoc()){
-    $pecah2[] = $tiap;
+if($count2 > 0){
+    while($tiap = $ambil2->fetch_assoc()){
+        $pecah2[] = $tiap;
+    }
+} else {
+    $_SESSION['id'] = 1;
 }
+var_dump($pecah);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,16 +55,17 @@ while($tiap = $ambil2->fetch_assoc()){
                     <?php foreach($pecah as $key => $value):?>
                                 <div class="isinya bg-primary p-2 m-2 w-50 float-end rounded shadow">
                                 <img src="img/<?= $user['foto_pelanggan'];?>" alt="" width="25" height="25" >
-                                <p class="d-inline text-white"><?= date("d F Y", strtotime($value['waktu']));?></p>
-                                <p class="d-block text-white mt-2" cols="30" rows="1" readonly><?= $value['pesan'];?></p>
+                                <p class="d-inline text-white"><?= date("d F Y", strtotime($value['waktu_user']));?></p>
+                                <a href="hapuschatuser.php?id=<?= $value['id_enroll'];?>" class="btn btn-danger float-end" style="width:fit-content; height:fit-content"><i class="fas fa-window-close py-1"></i></a>
+                                <p class="d-block text-white mt-2" readonly><?= $value['pesan_user'];?></p>
                                 
                                 </div>
                                 <?php foreach($pecah2 as $keys => $values):?>
-                                <?php if($value['id_chat'] == $values['id_chat']):?>
+                                    <?php if($values['id_enroll'] == $value['id_enroll']):?>
                                     <div class="isinya bg-info p-2 m-2 w-50 float-start rounded shadow">
                                         <img src="user(2).png" alt="" width="25" height="25" >
-                                        <p class="d-inline text-white"><?= date("d F Y", strtotime($value['waktu']));?></p>
-                                        <p class="d-block text-white mt-2" cols="30" rows="1" readonly><?= $values['pesan'];?></p>
+                                        <p class="d-inline text-white"><?= date("d F Y", strtotime($values['waktu_admin']));?></p>
+                                        <p class="d-block text-white mt-2" cols="30" rows="1" readonly><?= $values['pesan_admin'];?></p>
                                     </div>
                                 <?php endif;?>
                     <?php endforeach;?>   
@@ -82,7 +94,24 @@ while($tiap = $ambil2->fetch_assoc()){
     if(isset($_POST['kirim'])){
         $chat = $_POST['chat'];
         $id_pelanggan = $_SESSION['pelanggan']['id_pelanggan'];
-        $connect->query("INSERT INTO chat (id_chat, id_chat_user, pesan ) VALUES ('','$id_pelanggan','$chat')");
+        $id_admin = $_SESSION['admin']['id_admin'];
+        $ambil3 = $connect->query("SELECT * FROM enroll WHERE id_admin='$id_admin' and id_pelanggan='$id_pelanggan'");
+        $ambil4;
+        $id_barusan;
+        if($ambil3->num_rows == 0){
+            $connect->query("INSERT INTO enroll (id_enroll, id_admin, id_pelanggan ) VALUES (1,'$id_admin','$id_pelanggan')");
+            $id_barusan = $connect->insert_id;
+        } else {
+            $ambil4 = $connect->query("SELECT * FROM enroll WHERE id_admin='$id_admin' and id_pelanggan='$id_pelanggan'");
+            $i = 1;
+            while($tiap = $ambil4->fetch_assoc()){
+                $id_barusan = $tiap['id_enroll'] ;
+                $id_barusan++;
+                
+            }
+            $connect->query("INSERT INTO enroll (id, id_enroll, id_admin, id_pelanggan) VALUES ('','$id_barusan','$id_admin','$id_pelanggan')");
+        }
+        $connect->query("INSERT INTO chat (id_chat_user, id_enroll, id_pelanggan, pesan_user) VALUES ('','$id_barusan','$id_pelanggan', '$chat')");
         echo "<script>alert('chat telah dikirim!');</script>";
         echo "<script>location = 'chat.php';</script>";
     }    

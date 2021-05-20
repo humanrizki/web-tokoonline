@@ -2,21 +2,41 @@
 session_start();
 include '../koneksi.php';
 $admin = $_SESSION['admin'];
+if(!isset($_SESSION['admin'])){
+    echo "<script>alert('admin sedang tidak aktif, tunggu beberapa saat dan coba lagi!');</script>";
+    echo "<script>location = 'account.php';</script>";
+}
 $user = $_SESSION['pelanggan'];
-$chat_id = $_GET['id'];
-$ambil = $connect->query("SELECT * FROM chat WHERE id_chat_user='$chat_id'");
-$ambil2 = $connect->query("SELECT * FROM reply_chat");
+$chat_id = $_SESSION['pelanggan']['id_pelanggan'];
+$ambil = $connect->query("SELECT * FROM chat");
+$ambil2 = $connect->query("SELECT * FROM message");
+// $ambil3;
+$count = $ambil->num_rows;
+$count2 = $ambil2->num_rows;
 $pecah = [];
 $pecah2 = [];
-while($tiap = $ambil->fetch_assoc()){
-    $pecah[] = $tiap;
-
+$pecah3 = [];
+$temp = [];
+if($count > 0){
+    while($tiap = $ambil->fetch_assoc()){
+        $pecah[] = $tiap;
+    }
+} else {
+    $_SESSION['id'] = 1;
 }
-$id = end($pecah);
-while($tiap = $ambil2->fetch_assoc()){
-    $pecah2[] = $tiap;
-}
-?>
+if($count2 > 0){
+    while($tiap = $ambil2->fetch_assoc()){
+        $pecah2[] = $tiap;
+    }
+} 
+    $ambil3 = $connect->query("SELECT * FROM enroll");
+    while($tiap = $ambil3->fetch_assoc()){
+        $pecah3[] = $tiap;
+    }
+    echo "<pre>";
+    var_dump($pecah3);
+    echo "</pre>";
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,49 +53,59 @@ while($tiap = $ambil2->fetch_assoc()){
         <h4>Halaman Chat</h4>
         <div class="linkup">
             <div class="brand bg-light p-3 d-block clearfix">
-            <?php if(empty($user['foto_pelanggan'])):?>
-                    <img src="../user(2).png" alt="" width="50" height="50" class="float-start">
-                    <?php else:?>
-                    <img src="../img/<?= $user['foto_pelanggan'];?>" alt="" width="50" height="50" class="float-start">
-                    <?php endif;?>
-                <p class="fs-3 d-inline ms-3 my-auto "><?= $user['nama_pelanggan'];?></p>
-                <p class="fs-5 ms-5 d-block"><i class="fa fa-circle text-success ms-3 me-2"></i><?= isset($admin) ? "online": "offline";?></p>
+                <img src="../user(2).png" alt="" class="d-block float-start me-3" width="50" height="50">
+                <p class="fs-3 d-block ms-5 my-auto "><?= $admin['fullname'];?></p>
+                <p class="fs-5 ms-1 float-start"><i class="fas fa-circle text-success me-2"></i><?= isset($admin) ? "online": "offline";?></p>
             </div>
             <div class="body bg-white border" style="margin-bottom: 200px;">
                 <div class="riwayatchat " style="height: 480px; overflow-y: auto;">
-                    <?php foreach($pecah as $key => $value):?>
-                                <div class="isinya bg-primary p-2 m-2 w-50 float-start rounded shadow">
-                                <?php if(empty($user['foto_pelanggan'])):?>
-                                <img src="../user(2).png" alt="" width="25" height="25" >
-                                <?php else:?>
-                                <img src="../img/<?= $user['foto_pelanggan'];?>" alt="" width="25" height="25" >
-                                <?php endif;?>
-                                <p class="d-inline text-white"><?= date("d F Y", strtotime($value['waktu']));?></p>
-                                <p class="d-block text-white mt-2" cols="30" rows="1" readonly><?= $value['pesan'];?></p>
-                                
-                                </div>
-                                <?php foreach($pecah2 as $keys => $values):?>
-                                <?php if($value['id_chat'] == $values['id_chat']):?>
-                                    <div class="isinya bg-info p-2 m-2 w-50 float-end rounded shadow">
+                            <?php 
+                            $i = 1;
+                            foreach($pecah3 as $ks){
+                                $temp[] = $ks['id_enroll'];
+                            }
+                            var_dump($temp);
+                            foreach($pecah2 as $keys => $values):?>
+                                <?php if(!empty($temp[$i]) == $values['id_enroll']):?>
+                                    <div class="isinya bg-primary p-2 m-2 w-50 float-end rounded shadow">
                                         <img src="../user(2).png" alt="" width="25" height="25" >
-                                        <p class="d-inline text-white"><?= date("d F Y", strtotime($value['waktu']));?></p>
-                                        <p class="d-block text-white mt-2" cols="30" rows="1" readonly><?= $values['pesan'];?></p>
+                                        <p class="d-inline text-white"><?= date("d F Y", strtotime($values['waktu_admin']));?></p>
+                                        <a href="hapuschatuser.php?id=<?= $value['id_chat_user'];?>" class="btn btn-danger float-end" style="width:fit-content; height:fit-content"><i class="fas fa-window-close py-1"></i></a>
+                                        <p class="d-block text-white mt-2" cols="30" rows="1" readonly><?= $values['pesan_admin'];?></p>
+                                    </div>
+                                <?php elseif($value['id_enroll'] == $values['id_enroll']):?>
+                                    <div class="isinya bg-primary p-2 m-2 w-50 float-end rounded shadow">
+                                        <img src="../user(2).png" alt="" width="25" height="25" >
+                                        <p class="d-inline text-white"><?= date("d F Y", strtotime($values['waktu_admin']));?></p>
+                                        <a href="hapuschatuser.php?id=<?= $value['id_chat_user'];?>" class="btn btn-danger float-end" style="width:fit-content; height:fit-content"><i class="fas fa-window-close py-1"></i></a>
+                                        <p class="d-block text-white mt-2" cols="30" rows="1" readonly><?= $values['pesan_admin'];?></p>
                                     </div>
                                 <?php endif;?>
-                    <?php endforeach;?>   
+                                
+                    <?php foreach($pecah as $key => $value):?>
+                                <div class="isinya bg-info p-2 m-2 w-50 float-start rounded shadow">
+                                <img src="../img/<?= $user['foto_pelanggan'];?>" alt="" width="25" height="25" >
+                                <p class="d-inline text-white"><?= date("d F Y", strtotime($value['waktu_user']));?></p>
+                                
+                                <p class="d-block text-white mt-2" readonly><?= $value['pesan_user'];?></p>
+                                
+                                </div>
                         
-                    
-                        <?php endforeach;?>  
+                        
+                    <?php endforeach;?>  
+                            <?php 
+                            $i++;
+                            endforeach;?>
                 </div>
                 <div class="pesan w-100 " >
                     <form action="" method="POST" class="container bg-light rounded py-3 clearfix" >
-                        <div class="form-group " >
+                        <div class="form-group" >
                             <div class="input-group">
-                                <textarea name="chat" id="" cols="30" rows="5" class="form-control" placeholder="Masukan komentar anda untuk membantu kami agar lebih berkembang lagi!"></textarea>
+                                <textarea name="chat" id="" cols="30" rows="5" class="form-control" placeholder="Ketik beberapa pesan untuk admin!"></textarea>
                             </div>
                             <div class="form-group my-2">
                                 <button class="btn btn-primary float-start" name="kirim">Chat</button>
-                                <a href="index.php?halaman=pelanggan" class="btn btn-info float-end text-white"> Kembali ke akun</a> 
+                                <a href="account.php" class="btn btn-info float-end text-white"> Kembali ke akun</a> 
                             </div>
                         </div>
                     </form>
@@ -87,11 +117,27 @@ while($tiap = $ambil2->fetch_assoc()){
 <?php 
     if(isset($_POST['kirim'])){
         $chat = $_POST['chat'];
-        $idnya = $id['id_chat'];
         $id_pelanggan = $_SESSION['pelanggan']['id_pelanggan'];
-        $connect->query("INSERT INTO reply_chat (id_reply_chat, id_chat, pesan) VALUES ('','$idnya','$chat')");
+        $id_admin = $_SESSION['admin']['id_admin'];
+        $ambil3 = $connect->query("SELECT * FROM enroll WHERE id_admin='$id_admin' and id_pelanggan='$id_pelanggan'");
+        $ambil4;
+        global $id_barusan;
+        if($ambil3->num_rows == 0){
+            $connect->query("INSERT INTO enroll (id_enroll, id_admin, id_pelanggan ) VALUES (1,'$id_admin','$id_pelanggan')");
+            $id_barusan = $connect->insert_id;
+        } else {
+            $ambil4 = $connect->query("SELECT * FROM enroll WHERE id_admin='$id_admin' and id_pelanggan='$id_pelanggan'");
+            $i = 1;
+            while($tiap = $ambil4->fetch_assoc()){
+                $id_barusan = $tiap['id_enroll'] ;
+                $id_barusan += $i;
+                $i++;
+            }
+            $connect->query("INSERT INTO enroll (id_enroll, id_admin, id_pelanggan ) VALUES ('$id_barusan','$id_admin','$id_pelanggan')");
+        }
+        $connect->query("INSERT INTO message (id_message, id_enroll, id_admin, pesan_admin) VALUES ('','$id_barusan','$id_admin', '$chat')");
         echo "<script>alert('chat telah dikirim!');</script>";
-        echo "<script>location = chat.php?id=".$chat_id.";</script>";
+        echo "<script>location = 'chat.php';</script>";
     }    
     ?>
 </body>
