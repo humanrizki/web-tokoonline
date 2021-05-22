@@ -12,14 +12,14 @@ $pecah = $ambil->fetch_assoc();
         <input type="hidden" name="fotoLama" value="<?php echo $pecah['foto_produk'];?>">
         <div class="form-group">
             <label for="nama">Nama : </label>
-            <div class="input-group">
+            <div class="">
                 <input type="text" class="form-control" name="nama" id="nama" value="<?= $pecah['nama_produk'];?>">
             </div>
         </div>
-        <div class="form-group">
+        <div class="">
             <label for="kategori">Kategori : </label>
-            <div class="input-group">
-                <select name="id_kategori" id="kategori">
+            <div class="">
+                <select name="id_kategori" id="kategori" class="form-control">
                     <option value="">Pilih Kategori</option>
                     <?php foreach($semuak as $key => $value):?>
                     <option value="<?= $value['id_kategori'];?>"><?= $value['nama_kategori'];?></option>
@@ -29,26 +29,26 @@ $pecah = $ambil->fetch_assoc();
         </div>
         <div class="form-group">
             <label for="harga">Harga (Rp) : </label>
-            <div class="input-group">
+            <div class="">
                 <input type="number" class="form-control" name="harga" id="harga" value="<?= $pecah['harga_produk'];?>">
             </div>
         </div>
         <div class="form-group">
             <label for="berat">Berat (Gr) : </label>
-            <div class="input-group">
+            <div class="">
                 <input type="text" class="form-control" name="berat" id="berat" value="<?= $pecah['berat_produk'];?>">
             </div>
         </div>
         <div class="form-group">
             <label for="deskripsi">Deskripsi : </label>
-            <div class="input-group">
+            <div class="">
                 <textarea class="form-control" name="deskripsi" id="deskripsi" rows="10" ><?= $pecah['deskripsi_produk'];?>
                 </textarea>
             </div>
         </div>
         <div class="form-group">
             <label for="stok">Stok : </label>
-            <div class="input-group">
+            <div class="">
                 <input type="number" min="1" class="form-control" name="stok" id="stok" value="<?= $pecah['stok_produk'];?>">
             </div>
         </div>

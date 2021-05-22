@@ -13,13 +13,12 @@
     <?php 
         $i = 1;
         $ambil = $connect->query("SELECT * FROM pelanggan");
-        $ambil2 = $connect->query("SELECT * FROM chat");
+        
         $id = [];
+        $pecah2 = [];
         $ids;
-        while($tiap = $ambil2->fetch_assoc()){
-            $id[] = $tiap['id_chat_user'];
-            $ids = array_keys(array_count_values($id));
-        } 
+        
+
         ?>
         <?php while($pecah = $ambil->fetch_assoc()):
             
@@ -33,8 +32,16 @@
             <td>
                 <a href="" class="btn-danger btn">hapus</a>
                 <a href="" class="btn-warning btn">ubah</a>
-                <?php foreach($ids as $key => $value):?>
-                <?php if($value == $pecah['id_pelanggan']):?>
+                <?php 
+                $ambil2;
+                $ambil2 = $connect->query("SELECT * FROM chat WHERE id_pelanggan='$pecah[id_pelanggan]'");
+                while($tiap = $ambil2->fetch_assoc()){
+                    $pecah2[] = $tiap;
+
+                }
+                ?>
+                <?php foreach($pecah2 as $val):?>
+                <?php if($val['id_pelanggan'] == $pecah['id_pelanggan']):?>
                 <a href="chat.php?id=<?= $pecah['id_pelanggan'];?>" class="btn btn-primary">Chat Pelanggan </a>
                 <?php endif;?>
                 <?php endforeach;?>

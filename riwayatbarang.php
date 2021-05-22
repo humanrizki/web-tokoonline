@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include 'koneksi.php';
+include 'koneksi.php';error_reporting(1);
 $id_pelanggan = $_SESSION['pelanggan']['id_pelanggan'];
 $ambil = $connect->query("SELECT * FROM pembelian JOIN pembelian_produk ON pembelian.id_pembelian=pembelian_produk.id_pembelian WHERE pembelian.id_pelanggan='$id_pelanggan'");
 $detail = [];

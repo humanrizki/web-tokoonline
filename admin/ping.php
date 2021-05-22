@@ -7,9 +7,7 @@ while($tiap = $ambil->fetch_assoc()){
     $pecah[] = $tiap;
 }
 ?>
-<pre>
-<?= var_dump($pecah);?>
-</pre>
+
 <table class="table table-bordered">
     <thead>
         <tr>

@@ -28,7 +28,25 @@ if($count2 > 0){
 } else {
     $_SESSION['id'] = 1;
 }
-var_dump($pecah);
+// var_dump($pecah);
+$ambil3 = $connect->query("SELECT * FROM enroll ");
+    while($tiap = $ambil3->fetch_assoc()){
+        $pecah3[] = $tiap;
+    }
+    $ambil4;
+    $pecah4 = [];
+    $ambil5;
+    $pecah5 = [];
+    foreach($pecah3 as $key => $value){
+        $ambil4 = $connect->query("SELECT * FROM chat JOIN enroll ON chat.id_enroll=enroll.id_enroll WHERE chat.id_enroll='$value[id_enroll]'");
+        $ambil5 = $connect->query("SELECT * FROM message JOIN enroll ON message.id_enroll=enroll.id_enroll WHERE message.id_enroll='$value[id_enroll]'");
+        while($tiap = $ambil4->fetch_assoc()){
+            $pecah4[] = $tiap;
+        }
+        while($tiap = $ambil5->fetch_assoc()){
+            $pecah5[] = $tiap;
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +57,60 @@ var_dump($pecah);
     <link rel="stylesheet" href="fontawesome/css/all.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <?php include 'favicon.php';?>
+    <style>
+    
+    div.isinya2{
+        display: block;
+        width: 50%;
+        position: relative;
+        background-color: #292b2c;
+        }
+    div.isinya2::before{
+        content: "";
+        display: block;
+        width: 30px;
+        height: 30px;
+        clip-path: polygon(0 0, 100% 100%, 100% 0);
+        position: absolute;
+        top: 0px;
+        left: -20px;
+        background-color: #292b2c;
+        }
+        div.isinya1{
+        display: block;
+        width: 50%;
+        position: relative;
+        background-color: rgb(2, 117, 216);
+        }
+    div.isinya1::after{
+        content: "";
+        display: block;
+        width: 30px;
+        height: 30px;
+        z-index: 0;
+        background-color: rgb(2, 117, 216);
+        clip-path: polygon(0 0, 0 100%, 100% 0);
+        position: absolute;
+        top: 0px;
+        right: -20px;
+        border-radius: 5px;
+        }
+        @media screen and (max-width: 600px){
+        div.isinya2{
+        display: block;
+        width: 90%;
+        position: relative;
+        /* background-color: grey; */
+        }
+        div.isinya1{
+        display: block;
+        width: 90%;
+        position: relative;
+        
+        }
+        
+    }
+    </style>
     <title>Halaman Chatting</title>
 </head>
 <body>
@@ -50,28 +122,31 @@ var_dump($pecah);
                 <p class="fs-3 d-block ms-5 my-auto "><?= $admin['fullname'];?></p>
                 <p class="fs-5 ms-1 float-start"><i class="fas fa-circle text-success me-2"></i><?= isset($admin) ? "online": "offline";?></p>
             </div>
-            <div class="body bg-white border" style="margin-bottom: 200px;">
-                <div class="riwayatchat " style="height: 480px; overflow-y: auto;">
-                    <?php foreach($pecah as $key => $value):?>
-                                <div class="isinya bg-primary p-2 m-2 w-50 float-end rounded shadow">
-                                <img src="img/<?= $user['foto_pelanggan'];?>" alt="" width="25" height="25" >
-                                <p class="d-inline text-white"><?= date("d F Y", strtotime($value['waktu_user']));?></p>
-                                <a href="hapuschatuser.php?id=<?= $value['id_enroll'];?>" class="btn btn-danger float-end" style="width:fit-content; height:fit-content"><i class="fas fa-window-close py-1"></i></a>
-                                <p class="d-block text-white mt-2" readonly><?= $value['pesan_user'];?></p>
-                                
-                                </div>
-                                <?php foreach($pecah2 as $keys => $values):?>
-                                    <?php if($values['id_enroll'] == $value['id_enroll']):?>
-                                    <div class="isinya bg-info p-2 m-2 w-50 float-start rounded shadow">
-                                        <img src="user(2).png" alt="" width="25" height="25" >
-                                        <p class="d-inline text-white"><?= date("d F Y", strtotime($values['waktu_admin']));?></p>
-                                        <p class="d-block text-white mt-2" cols="30" rows="1" readonly><?= $values['pesan_admin'];?></p>
-                                    </div>
-                                <?php endif;?>
-                    <?php endforeach;?>   
-                        
-                    
-                        <?php endforeach;?>  
+            <div class="body bg-white" style="margin-bottom: 200px;">
+                <div class="riwayatchat m-3 p-2" style="height: 480px; overflow-y: auto;">
+                <?php foreach($pecah3 as $key => $value):?>
+                    <?php foreach($pecah4 as $kt => $vt):?>
+
+                            <?php if($vt['id_enroll'] == $value['id_enroll']):?>    
+                            <div class="isinya1 p-2 ms-2 mt-2 me-4 mb-2  float-end rounded shadow">
+                                <img src="img/LogoP.png" alt="" width="25" height="25" >
+                                    <p class="d-inline text-white"><?= date("d F Y", strtotime($vt['waktu_user']));?></p>
+                                    <a href="hapuschatuser.php?id=<?= $vt['id_chat_user'];?>" class="btn  float-end" style="width:fit-content; height:fit-content"><i class="fas fa-window-close py-1 px-1 fs-4 bg-danger rounded text-white" style="width: fit-content; height:fit-content"></i></a>
+                                    <p class="d-block text-white mt-2"><?= $vt['pesan_user'];?></p>
+                            </div>
+                            <?php endif;?>
+                    <?php endforeach;?>          
+                    <?php foreach($pecah5 as $ks => $vs):?>
+                            <?php if($vs['id_enroll'] == $value['id_enroll']):?>
+                                <div class="isinya2 p-2 ms-4 mt-2 me-2 mb-2 float-start rounded shadow">
+                                <img src="user(2).png" alt="" width="25" height="25" >
+                                    <p class="d-inline text-white"><?= date("d F Y", strtotime($vs['waktu_admin']));?></p>
+                                    
+                                    <p class="d-block text-white mt-2"><?= $vs['pesan_admin'];?></p>
+                            </div>
+                            <?php endif;?>
+                    <?php endforeach;?>
+                    <?php endforeach;?>
                 </div>
                 <div class="pesan w-100 " >
                     <form action="" method="POST" class="container bg-light rounded py-3 clearfix" >

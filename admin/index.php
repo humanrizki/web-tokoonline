@@ -23,6 +23,7 @@ if(!isset($_SESSION['admin'])){
     <link href="assets/css/custom.css" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+   <?php include 'favicon.php';?>
    <script src="assets/js/jquery-1.10.2.js"></script>
 </head>
 <body>
