@@ -38,15 +38,19 @@ if($count2 > 0){
     $pecah4 = [];
     $ambil5;
     $pecah5 = [];
-    foreach($pecah3 as $key => $value){
-        $ambil4 = $connect->query("SELECT * FROM chat JOIN enroll ON chat.id_enroll=enroll.id_enroll WHERE chat.id_enroll='$value[id_enroll]'");
-        $ambil5 = $connect->query("SELECT * FROM message JOIN enroll ON message.id_enroll=enroll.id_enroll WHERE message.id_enroll='$value[id_enroll]'");
-        while($tiap = $ambil4->fetch_assoc()){
-            $pecah4[] = $tiap;
-        }
-        while($tiap = $ambil5->fetch_assoc()){
-            $pecah5[] = $tiap;
-        }
+    // foreach($pecah3 as $key => $value){
+        
+        
+        
+    // }
+    $ambil4 = $connect->query("SELECT * FROM chat JOIN enroll ON chat.id_enroll=enroll.id_enroll ");
+    $ambil5 = $connect->query("SELECT * FROM message JOIN enroll ON message.id_enroll=enroll.id_enroll");
+    error_reporting(1);
+    while($tiap = $ambil4->fetch_assoc()){
+        $pecah4[] = $tiap;
+    }
+    while($tiap = $ambil5->fetch_assoc()){
+        $pecah5[] = $tiap;
     }
     
     ?>
@@ -121,35 +125,78 @@ if($count2 > 0){
         <h4>Halaman Chat</h4>
         <div class="linkup">
             <div class="brand bg-light p-3 d-block clearfix ">
-                <img src="../img/<?= $user['foto_pelanggan']?>" alt="" class="d-block float-start me-3" width="50" height="50">
+            <?php if(!empty($user['foto_pelanggan'])):?>
+                    <img src="../img/<?= $user['foto_pelanggan'];?>" alt="" class="d-inline float-start me-3" width="50" height="50" >
+                <?php else:?>
+                    <img src="../user(2).png" alt=""class="d-inline float-start me-3" width="50" height="50" >
+                <?php endif;?>
                 <p class="fs-3 d-block ms-5 my-auto "><?= $user['nama_pelanggan']?></p>
                 <p class="fs-5 ms-1 float-start"><i class="fas fa-circle text-success me-2"></i><?= isset($user) ? "online": "offline";?></p>
             </div>
-            <div class="body bg-white" style="margin-bottom: 200px;">
-                <div class="riwayatchat bg-white m-3" style="height: 480px; overflow-y: auto;">
+            <div class="body bg-white" >
+                <div class="riwayatchat bg-white " style="height: 480px; overflow-y: auto;">
                 <?php foreach($pecah3 as $key => $value):?>
-                    <?php foreach($pecah4 as $kt => $vt):?>
-
-                            <?php if($vt['id_enroll'] == $value['id_enroll']):?>    
-                            <div class="isinya1 p-2 ms-4 mt-2 me-2 mb-2 w-50 float-start rounded shadow ">
-                                <img src="../img/LogoP.png" alt="" width="25" height="25" >
-                                    <p class="d-inline text-white"><?= date("d F Y", strtotime($vt['waktu_user']));?></p>
-                                    <p class="d-block text-white mt-2" ><?= $vt['pesan_user'];?></p>
-                            </div>
+                    <?php if($value['id_pelanggan'] == $chat_id):?>
+                        <?php foreach($pecah4 as $kt => $vt):?>
+                            <?php if($vt['id_pelanggan'] == $_SESSION['pelanggan']['id_pelanggan']):?>
+                                <?php if($vt['id_enroll'] == $value['id_enroll']):?> 
+                                    <?php if(empty($vt['pesan_admin'])):?>   
+                                        <div class="isinya1 p-2 ms-4 mt-2 me-2 mb-2 w-50 float-start rounded shadow ">
+                                        <?php if(!empty($user['foto_pelanggan'])):?>
+                                            <img src="../img/<?= $user['foto_pelanggan'];?>" alt="" width="25" height="25" >
+                                        <?php else:?>
+                                            <img src="../user(2).png" alt="" width="25" height="25" >
+                                        <?php endif;?>
+                                            <p class="d-inline text-white"><?= date("d F Y", strtotime($vt['waktu_user']));?></p>
+                                            <a href="balaschatuser.php?id=<?= $vt['id_chat_user'];?>" class="float-end"><i class="fas fa-reply p-1 fs-4" id="ibalas"></i></a>
+                                            <p class="d-block text-white mt-2 ms-" ><?= $vt['pesan_user'];?></p>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="isinya1 p-2 ms-4 mt-2 me-2 mb-2 w-50 float-start rounded shadow ">
+                                            <?php if(!empty($user['foto_pelanggan'])):?>
+                                                <img src="../img/<?= $user['foto_pelanggan'];?>" alt="" width="25" height="25" >
+                                            <?php else:?>
+                                                <img src="../user(2).png" alt="" width="25" height="25" >
+                                            <?php endif;?>
+                                            <p class="d-inline text-white"><?= date("d F Y", strtotime($vt['waktu_user']));?></p>
+                                            <a href="balaschatuser.php?id=<?= $vt['id_chat_user'];?>" class="float-end"><i class="fas fa-reply p-1 fs-4" id="ibalas"></i></a>
+                                            <div class="pesan-baru-user bg-white rounded" style="width: 90%; height:fit-content;">
+                                                <p class="mt-4 mb-0 ms-2 py-2 "><?= $vt['pesan_admin'];?></p>
+                                            </div>
+                                            <p class="d-block text-white mt-2 ms-2" ><?= $vt['pesan_user'];?></p>
+                                    </div>
+                                <?php endif;?>
                             <?php endif;?>
+                        <?php endif;?>
                     <?php endforeach;?>          
                     <?php foreach($pecah5 as $ks => $vs):?>
+                        <?php if($value['id_pelanggan'] == $_SESSION['pelanggan']['id_pelanggan']):?>
                             <?php if($vs['id_enroll'] == $value['id_enroll']):?>
+                            <?php if(empty($vs['pesan_user'])):?>
                                 <div class="isinya2  p-2 ms-2 mt-2 me-4 mb-2 w-50 float-end rounded shadow" id="isinya2">
                                 <img src="../user(2).png" alt="" width="25" height="25" >
                                     <p class="d-inline text-white"><?= date("d F Y", strtotime($vs['waktu_admin']));?></p>
                                     <a href="hapuschatadmin.php?id=<?= $vs['id_message'];?>" class="btn  float-end" style="width:fit-content; height:fit-content"><i class="fas fa-window-close py-1 px-1 fs-4 bg-danger rounded text-white" style="width: fit-content; height:fit-content"></i></a>
-                                    <p class="d-block text-white mt-2"><?= $vs['pesan_admin'];?></p>
+                                    <p class="d-block text-white mt-2 ms-1"><?= $vs['pesan_admin'];?></p>
+                            </div>
+                            <?php else:?>
+                            <div class="isinya2  p-2 ms-2 mt-2 me-4 mb-2 w-50 float-end rounded shadow" id="isinya2">
+                                <img src="../user(2).png" alt="" width="25" height="25" >
+                                    <p class="d-inline text-white"><?= date("d F Y", strtotime($vs['waktu_admin']));?></p>
+                                    <a href="hapuschatadmin.php?id=<?= $vs['id_message'];?>" class="btn  float-end" style="width:fit-content; height:fit-content"><i class="fas fa-window-close py-1 px-1 fs-4 bg-danger rounded text-white" style="width: fit-content; height:fit-content"></i></a>
+                                    <div class="pesan-baru-user bg-white rounded" style="width: 90%; height:fit-content;">
+                                    <p class="mt-4 mb-0 ms-2 py-2 "><?= $vs['pesan_user'];?></p>
+                                    </div>
+                                    <p class="d-block text-white mt-1 mb-1 ms-2"><?= $vs['pesan_admin'];?></p>
                             </div>
                             <?php endif;?>
+                            <?php endif;?>
+                        <?php endif;?>
                     <?php endforeach;?>
+                    <?php endif;?>
                     <?php endforeach;?>
                 </div>
+            </div>
                 <div class="pesan w-100 " >
                     <form action="" method="POST" class="container bg-light rounded py-3 clearfix" >
                         <div class="form-group" >
@@ -167,31 +214,33 @@ if($count2 > 0){
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+</body>
+</html>
 <?php 
     if(isset($_POST['kirim'])){
         $chat = $_POST['chat'];
         $id_pelanggan = $_SESSION['pelanggan']['id_pelanggan'];
         $id_admin = $_SESSION['admin']['id_admin'];
         $ambil3 = $connect->query("SELECT * FROM enroll WHERE id_admin='$id_admin' and id_pelanggan='$id_pelanggan'");
-        $ambil4;
+        
+        
         global $id_barusan;
         if($ambil3->num_rows == 0){
             $connect->query("INSERT INTO enroll (id_enroll, id_admin, id_pelanggan ) VALUES (1,'$id_admin','$id_pelanggan')");
             $id_barusan = $connect->insert_id;
+            
         } else {
-            $ambil4 = $connect->query("SELECT * FROM enroll WHERE id_admin='$id_admin' and id_pelanggan='$id_pelanggan'");
+            
             // $i = 1;
-            while($tiap = $ambil4->fetch_assoc()){
+            while($tiap = $ambil3->fetch_assoc()){
                 $id_barusan = $tiap['id_enroll'] ;
                 $id_barusan++;
                 // $i++;
             }
             $connect->query("INSERT INTO enroll (id_enroll, id_admin, id_pelanggan ) VALUES ('$id_barusan','$id_admin','$id_pelanggan')");
         }
-        $connect->query("INSERT INTO message (id_message, id_enroll, id_admin, pesan_admin) VALUES ('','$id_barusan','$id_admin', '$chat')");
+        $connect->query("INSERT INTO message (id_message, id_enroll, id_admin, id_pelanggan, pesan_admin) VALUES ('','$id_barusan','$id_admin', '$id_pelanggan', '$chat')");
         echo "<script>alert('chat telah dikirim!');</script>";
         echo "<script>location = 'chat.php';</script>";
     }    
     ?>
-</body>
-</html>
