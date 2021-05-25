@@ -8,6 +8,7 @@ if(!isset($_SESSION['admin'])){
 }
 $user = $_SESSION['pelanggan'];
 $chat_id = $_SESSION['pelanggan']['id_pelanggan'];
+$message = $_SESSION['admin']['id_admin'];
 $ambil = $connect->query("SELECT * FROM chat");
 $ambil2 = $connect->query("SELECT * FROM message");
 $count = $ambil->num_rows;
@@ -30,7 +31,7 @@ if($count2 > 0){
     $_SESSION['id'] = 1;
 }
 // var_dump($pecah);
-$ambil3 = $connect->query("SELECT * FROM enroll ");
+$ambil3 = $connect->query("SELECT * FROM enroll");
     while($tiap = $ambil3->fetch_assoc()){
         $pecah3[] = $tiap;
     }
@@ -38,13 +39,13 @@ $ambil3 = $connect->query("SELECT * FROM enroll ");
     $pecah4 = [];
     $ambil5;
     $pecah5 = [];
-    // foreach($pecah3 as $key => $value){
+    foreach($pecah3 as $key => $value){
         
         
         
-    // }
+    }
     $ambil4 = $connect->query("SELECT * FROM chat JOIN enroll ON chat.id_enroll=enroll.id_enroll ");
-    $ambil5 = $connect->query("SELECT * FROM message JOIN enroll ON message.id_enroll=enroll.id_enroll");
+    $ambil5 = $connect->query("SELECT * FROM message JOIN enroll ON message.id_enroll=enroll.id_enroll ");
     error_reporting(1);
     while($tiap = $ambil4->fetch_assoc()){
         $pecah4[] = $tiap;
@@ -54,7 +55,7 @@ $ambil3 = $connect->query("SELECT * FROM enroll ");
     }
 ?>
 <pre>
-<?php echo var_dump($pecah5);?>
+<?php echo var_dump($pecah4);?>
 </pre>
 <!DOCTYPE html>
 <html lang="en">
@@ -166,6 +167,7 @@ $ambil3 = $connect->query("SELECT * FROM enroll ");
                                 <?php endif;?>    
                             <?php endforeach;?>          
                             <?php foreach($pecah5 as $ks => $vs):?>
+                                <?php if($ks == 0):?>
                                 <?php if($vs['id_enroll'] == $value['id_enroll'] or ($value['id_pelanggan'] == $_SESSION['pelanggan']['id_pelanggan'] and $value['id_admin'] == $_SESSION['admin']['id_admin'])):?>
                                         <?php if(empty($vs['pesan_user'])):?>
                                             <div class="isinya2 p-2 ms-4 mt-2 me-2 mb-2 float-start rounded shadow">
@@ -185,6 +187,7 @@ $ambil3 = $connect->query("SELECT * FROM enroll ");
                                                 <p class="d-block text-white mt-1 ms-2"><?= $vs['pesan_admin'];?></p>
                                             </div>
                                         <?php endif;?>
+                                    <?php endif;?>
                                 <?php endif;?>
                             <?php endforeach;?>
                         <?php endif;?>
@@ -220,7 +223,9 @@ $ambil3 = $connect->query("SELECT * FROM enroll ");
         $id_barusan;
         if($ambil3->num_rows == 0){
             $connect->query("INSERT INTO enroll (id_enroll, id_admin, id_pelanggan ) VALUES (1,'$id_admin','$id_pelanggan')");
-            $id_barusan = $connect->insert_id;
+            while($tiap = $ambil3->fetch_assoc()){
+                $id_barusan = $tiap['id_enroll'];
+            }
             
         } else {
             $ambil4 = $connect->query("SELECT * FROM enroll WHERE id_admin='$id_admin' and id_pelanggan='$id_pelanggan'");
