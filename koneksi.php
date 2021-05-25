@@ -1,3 +1,3 @@
 <?php 
-$connect = new mysqli("localhost","root","","tkonline");
+$connect = new mysqli("localhost","root","","tokoonline");
 ?>

@@ -210,7 +210,7 @@ if(is_nan($avg)){
             if($value['id_produk'] == $id_produk):?>
             <div class="container bg-light p-2 my-3" >
                 <h5>Nama : <?= $value['nama_pelanggan_komen'];?></h5>
-                <p>Tanggal : <?= date("d F Y", strtotime($value['tanggal']));?></p>
+                <p>Tanggal : <?= date("d F Y H:i", strtotime($value['tanggal']));?></p>
                 <div class="input-group" >  
                     <textarea readonly class="form-control text-dark" rows="1"><?= $value['komentar'];?></textarea>
                     <?php if($_SESSION['pelanggan']['id_pelanggan'] != $value['id_pelanggan']):?>

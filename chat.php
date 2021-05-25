@@ -235,7 +235,7 @@ $ambil3 = $connect->query("SELECT * FROM enroll");
                 $id_barusan++;
                 
             }
-            $connect->query("INSERT INTO enroll (id, id_enroll, id_admin, id_pelanggan) VALUES ('','$id_barusan','$id_admin','$id_pelanggan')");
+            $connect->query("INSERT INTO enroll ( id_enroll, id_admin, id_pelanggan) VALUES ('','$id_admin','$id_pelanggan')");
         }
         $connect->query("INSERT INTO chat (id_chat_user, id_enroll, id_pelanggan, id_admin, pesan_user) VALUES ('','$id_barusan','$id_pelanggan', '$id_admin', '$chat')");
         echo "<script>alert('chat telah dikirim!');</script>";
