@@ -1,5 +1,6 @@
 <?php 
 session_start();
+// include 'koneksi.php';
 // setcookie('login','true',time() + 50);
 // echo $_POST['ingat'];
 // setcookie("login","user");
@@ -101,9 +102,7 @@ if (isset($_POST['submit'])){
     $ambil = $connect->query("SELECT * FROM pelanggan WHERE email_pelanggan='$email' AND password_pelanggan='$password'");
     if($ambil->num_rows == 1){
         $akun = $ambil->fetch_assoc();
-        if(isset($_POST['ingat'])){
-            
-        }
+        
         $_SESSION['pelanggan'] = $akun;
         if(isset($_SESSION['keranjang'])){
             // echo "<script>alert('Harus belanja dulu!');</script>";

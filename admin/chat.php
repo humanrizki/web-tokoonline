@@ -140,7 +140,7 @@ if($count2 > 0){
             <div class="body bg-white" >
                 <div class="riwayatchat bg-white " style="height: 480px; overflow-y: auto;">
                 
-                    <?php for($i = 0; $i < count($pecah3_temp); $i++):?>
+                    <?php for($i = 0; $i < 1; $i++):?>
                     
                         <?php foreach($pecah4 as $kt => $vt):?>
                             
@@ -214,7 +214,7 @@ if($count2 > 0){
         $ambil3 = $connect->query("SELECT * FROM enroll WHERE id_admin='$id_admin' and id_pelanggan='$id_pelanggan'");
         
         
-        global $id_barusan;
+         $id_barusan;
         if($ambil3->num_rows == 0){
             $connect->query("INSERT INTO enroll (id_enroll, id_admin, id_pelanggan ) VALUES (1,'$id_admin','$id_pelanggan')");
             $id_barusan = $connect->insert_id;
@@ -224,11 +224,11 @@ if($count2 > 0){
             // $i = 1;
             while($tiap = $ambil3->fetch_assoc()){
                 $id_barusan = $tiap['id_enroll'] ;
-                $id_barusan++;
+                // $id_barusan++;
                 // $i++;
             }
+            $connect->query("INSERT INTO enroll (id_enroll, id_admin, id_pelanggan ) VALUES ('','$id_admin','$id_pelanggan')");
         }
-        $connect->query("INSERT INTO enroll (id_enroll, id_admin, id_pelanggan ) VALUES ('$id_barusan','$id_admin','$id_pelanggan')");
         $connect->query("INSERT INTO message (id_message, id_enroll, id_admin, id_pelanggan, pesan_admin) VALUES ('','$id_barusan','$id_admin', '$id_pelanggan', '$chat')");
         echo "<script>alert('chat telah dikirim!');</script>";
         echo "<script>location = 'chat.php';</script>";

@@ -20,7 +20,7 @@ session_start();
     <div class="d-block container w-25 position-absolute top-50 start-50 translate-middle bg-light p-3">
         <form action="" method="POST">
         <?php 
-        $connect = new mysqli('localhost','root','','tkonline');
+        include '../koneksi.php';
         ?>
         <?php if(isset($_POST['submit'])):
             $username = $_POST['username'];

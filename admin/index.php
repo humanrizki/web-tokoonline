@@ -1,6 +1,6 @@
 ﻿<?php 
 session_start();
-$connect = new mysqli('localhost','root','','tkonline');
+include '../koneksi.php';
 if(!isset($_SESSION['admin'])){
     echo "<script>alert('anda harus login terlebih dahulu');</script>";
     echo "<script>location = 'login.php';</script>";
