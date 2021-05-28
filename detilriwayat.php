@@ -13,7 +13,11 @@ if(empty($pecah)){
     echo "<script>location = 'account.php';</script>";
     exit();
 }
+
 ?>
+<pre>
+<?= var_dump($pecah);?>
+</pre>
 <!DOCTYPE html>
 <html lang="en">
 <head>

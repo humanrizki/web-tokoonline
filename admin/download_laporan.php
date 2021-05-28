@@ -5,6 +5,7 @@ $mpdf = new \Mpdf\Mpdf();
 $tgl_mulai = $_GET['tglm'];
 $tgl_selesai = $_GET['tgls'];
 $status = $_GET['status'];
+
 $ambil = $connect->query("SELECT * FROM pembelian pm LEFT JOIN pelanggan pl ON pm.id_pelanggan=pl.id_pelanggan WHERE status_pembelian='$status' AND tanggal_pembelian BETWEEN '$tgl_mulai' AND '$tgl_selesai'");
     while($detail = $ambil->fetch_assoc()){
         $semuadata[] = $detail;
